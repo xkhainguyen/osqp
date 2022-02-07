@@ -2,7 +2,7 @@ name: Main-Cuda
 
 on:
   push:
-    branches: [ master, develop** ]
+    branches: [ master, develop**, vb/gh-runner-fix ]
     tags:
       - '*'
   pull_request:
