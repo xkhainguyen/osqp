@@ -4,7 +4,11 @@
 #include <catch2/catch.hpp>
 
 #include "osqp.h"
-#include "lin_alg.h"
+
+extern "C" {
+  #include "lin_alg.h"
+}
+
 #include "utils/c_test_utils.h" //helper functions
 #include "lin_alg/test_lin_alg.h"
 #include "solve_linsys/test_solve_linsys.h"
@@ -34,9 +38,9 @@ TEST_CASE( "test_lin_alg", "[multi-file:1]" ) {
     SECTION( "test_mat_vec_multiplication" ) {
         test_mat_vec_multiplication();
     }
-    SECTION( "test_quad_form_upper_triang" ) {
-        test_quad_form_upper_triang();
-    }
+    // SECTION( "test_quad_form_upper_triang" ) {
+    //     test_quad_form_upper_triang();
+    // }
 	osqp_algebra_free_libs();
 }
 

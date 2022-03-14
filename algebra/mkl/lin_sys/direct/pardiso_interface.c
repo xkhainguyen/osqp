@@ -97,6 +97,7 @@ c_int init_linsys_solver_pardiso(pardiso_solver    **sp,
   s->polishing = polishing;
 
   // Link Functions
+  s->name            = &name_pardiso;
   s->solve           = &solve_linsys_pardiso;
   s->free            = &free_linsys_solver_pardiso;
   s->warm_start      = &warm_start_linsys_solver_pardiso;
@@ -105,7 +106,7 @@ c_int init_linsys_solver_pardiso(pardiso_solver    **sp,
   s->update_settings = &update_settings_linsys_solver_pardiso;
 
   // Assign type
-  s->type = DIRECT_SOLVER;
+  s->type = OSQP_DIRECT_SOLVER;
 
   // Working vector
   s->bp = (c_float *)c_malloc(sizeof(c_float) * n_plus_m);
@@ -231,7 +232,19 @@ c_int init_linsys_solver_pardiso(pardiso_solver    **sp,
     *sp = OSQP_NULL;
     return OSQP_LINSYS_SOLVER_INIT_ERROR;
   }
+  if ( s->iparm[21] < n ) {
+    // Error: Number of positive eigenvalues of KKT should be the same as dimension of P
+#ifdef PRINTING
+    c_eprint("KKT matrix has fewer positive eigenvalues than it should. The problem seems to be non-convex.");
+#endif
+    return OSQP_NONCVX_ERROR;
+  }
+
   return 0;
+}
+
+const char* name_pardiso() {
+  return "Pardiso";
 }
 
 // Returns solution to linear system  Ax = b with solution stored in b

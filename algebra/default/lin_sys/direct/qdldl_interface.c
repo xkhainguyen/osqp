@@ -234,6 +234,7 @@ c_int init_linsys_solver_qdldl(qdldl_solver      **sp,
     s->polishing = polishing;
 
     // Link Functions
+    s->name            = &name_qdldl;
     s->solve           = &solve_linsys_qdldl;
     s->update_settings = &update_settings_linsys_solver_qdldl;
     s->warm_start      = &warm_start_linsys_solver_qdldl;
@@ -249,7 +250,7 @@ c_int init_linsys_solver_qdldl(qdldl_solver      **sp,
 #endif
 
     // Assign type
-    s->type = DIRECT_SOLVER;
+    s->type = OSQP_DIRECT_SOLVER;
 
     // Set number of threads to 1 (single threaded)
     s->nthreads = 1;
@@ -369,6 +370,10 @@ c_int init_linsys_solver_qdldl(qdldl_solver      **sp,
 }
 
 #endif  // EMBEDDED
+
+const char* name_qdldl() {
+  return "QDLDL";
+}
 
 
 /* solve P'LDL'P x = b for x */

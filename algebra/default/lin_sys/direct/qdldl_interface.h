@@ -1,9 +1,6 @@
 #ifndef QDLDL_INTERFACE_H
 #define QDLDL_INTERFACE_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include "osqp.h"
 #include "types.h"  //OSQPMatrix and OSQPVector[fi] types
@@ -15,12 +12,14 @@ extern "C" {
 typedef struct qdldl qdldl_solver;
 
 struct qdldl {
-    enum linsys_solver_type type;
+    enum osqp_linsys_solver_type type;
 
     /**
      * @name Functions
      * @{
      */
+    const char* (*name)(void);
+
     c_int (*solve)(struct qdldl *self,
                    OSQPVectorf  *b,
                    c_int         admm_iter);
@@ -112,6 +111,12 @@ c_int init_linsys_solver_qdldl(qdldl_solver      **sp,
                                c_int               polishing);
 
 /**
+ * Get the user-friendly name of the QDLDL solver.
+ * @return The user-friendly name
+ */
+const char* name_qdldl();
+
+/**
  * Solve linear system and store result in b
  * @param  s        Linear system solver structure
  * @param  b        Right-hand side
@@ -173,8 +178,5 @@ c_int update_linsys_solver_rho_vec_qdldl(qdldl_solver      *s,
 void free_linsys_solver_qdldl(qdldl_solver * s);
 #endif
 
-#ifdef __cplusplus
-}
-#endif
 
-#endif
+#endif /* QDLDL_INTERFACE_H */

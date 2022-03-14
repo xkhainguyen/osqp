@@ -1,10 +1,6 @@
 #ifndef ALGEBRA_IMPL_H
 # define ALGEBRA_IMPL_H
 
-# ifdef __cplusplus
-extern "C" {
-# endif // ifdef __cplusplus
-
 #include "csc_math.h"
 
 /*********************************************
@@ -31,7 +27,7 @@ struct OSQPVectorf_ {
 /**
  *  An enum used to indicate whether a matrix is symmetric.   Options
  *  NONE : matrix is fully populated
- *  TRUI : matrix is symmetric and only upper triangle is stored
+ *  TRIU : matrix is symmetric and only upper triangle is stored
  */
 typedef enum OSQPMatrix_symmetry_type {NONE,TRIU} OSQPMatrix_symmetry_type;
 
@@ -41,8 +37,4 @@ struct OSQPMatrix_ {
 };
 
 
-# ifdef __cplusplus
-}
-# endif // ifdef __cplusplus
-
-#endif // ifndef ALGEBRA_IMPL_H
+#endif /* ifndef ALGEBRA_IMPL_H */

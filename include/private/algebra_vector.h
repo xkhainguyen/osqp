@@ -1,12 +1,11 @@
 #ifndef ALGEBRA_VECTOR_H
 #define ALGEBRA_VECTOR_H
 
+#include "glob_opts.h"
 
 # ifdef __cplusplus
 extern "C" {
-# endif /* ifdef __cplusplus */
-
-#include "glob_opts.h"
+# endif
 
 /*
  *  OSQPVector[fi] types.  Not defined here since it
@@ -51,6 +50,7 @@ OSQPVectorf* OSQPVectorf_view(const OSQPVectorf *a,
                               c_int              length);
 
 /* Points existing subview somewhere else.  (Does not use MALLOC)
+ * TODO: Get rid of this function
  */
 void OSQPVectorf_view_update(OSQPVectorf *a, const OSQPVectorf *b, c_int head, c_int length);
 
@@ -247,6 +247,6 @@ void OSQPVectorf_set_scalar_if_gt(OSQPVectorf       *x,
 
 # ifdef __cplusplus
 }
-# endif /* ifdef __cplusplus */
+# endif
 
 #endif /* ifndef ALGEBRA_VECTOR_H */

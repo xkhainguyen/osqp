@@ -1,9 +1,6 @@
-#ifndef PARDISO_H
-#define PARDISO_H
+#ifndef PARDISO_INTERFACE_H
+#define PARDISO_INTERFACE_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include "osqp.h"
 #include "types.h"  //OSQPMatrix and OSQPVector[fi] types
@@ -16,12 +13,14 @@ extern "C" {
 typedef struct pardiso pardiso_solver;
 
 struct pardiso {
-    enum linsys_solver_type type;
+    enum osqp_linsys_solver_type type;
 
     /**
      * @name Functions
      * @{
      */
+    const char* (*name)(void);
+
     c_int (*solve)(struct pardiso *self,
                    OSQPVectorf    *b,
                    c_int           admm_iter);
@@ -105,6 +104,13 @@ c_int init_linsys_solver_pardiso(pardiso_solver    **sp,
 
 
 /**
+ * Get the user-friendly name of the MKL Pardiso solver.
+ * @return The user-friendly name
+ */
+const char* name_pardiso();
+
+
+/**
  * Solve linear system and store result in b
  * @param  s        Linear system solver structure
  * @param  b        Right-hand side
@@ -154,8 +160,5 @@ c_int update_linsys_solver_rho_vec_pardiso(pardiso_solver    *s,
  */
 void free_linsys_solver_pardiso(pardiso_solver * s);
 
-#ifdef __cplusplus
-}
-#endif
 
-#endif
+#endif /* PARDISO_INTERFACE_H */

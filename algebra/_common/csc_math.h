@@ -1,9 +1,6 @@
 #ifndef CSC_MATH_H
 # define CSC_MATH_H
 
-# ifdef __cplusplus
-extern "C" {
-# endif // ifdef __cplusplus
 
 # include "csc_type.h"
 
@@ -67,8 +64,8 @@ void csc_Atxpy(const csc *A,
                      c_float alpha,
                      c_float beta);
 
-// returns 1/2 x'*P*x
-c_float csc_quad_form(const csc *P, const c_float *x);
+// // returns 1/2 x'*P*x
+// c_float csc_quad_form(const csc *P, const c_float *x);
 
 // E[i] = inf_norm(M(:,i))
 void csc_col_norm_inf(const csc *M, c_float *E);
@@ -80,8 +77,4 @@ void csc_row_norm_inf(const csc *M, c_float *E);
 void csc_row_norm_inf_sym_triu(const csc *M, c_float *E);
 
 
-# ifdef __cplusplus
-}
-# endif // ifdef __cplusplus
-
-#endif // ifndef CSC_MATH_H
+#endif /* ifndef CSC_MATH_H */

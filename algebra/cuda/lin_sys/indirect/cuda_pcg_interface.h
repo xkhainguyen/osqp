@@ -18,10 +18,8 @@
 #ifndef CUDA_PCG_INTERFACE_H
 #define CUDA_PCG_INTERFACE_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
+#include <cusparse.h>
 #include "osqp.h"
 #include "types.h"                /* OSQPMatrix and OSQPVector[fi] types */
 #include "algebra_types.h"        /* csr type */
@@ -32,12 +30,14 @@ extern "C" {
  */
 typedef struct cudapcg_solver_ {
 
-  enum linsys_solver_type type;
+  enum osqp_linsys_solver_type type;
 
   /**
    * @name Functions
    * @{
    */
+  const char* (*name)(void);
+
   c_int (*solve)(struct cudapcg_solver_ *self,
                  OSQPVectorf            *b,
                  c_int                   admm_iter);
@@ -80,16 +80,16 @@ typedef struct cudapcg_solver_ {
   c_float *scaled_prim_res;
   c_float *scaled_dual_res;
 
-  /* Pointers to problem data and ADMM settings */
+  /* ADMM settings and pointers to problem data */
+  c_float  h_rho;
+  c_float  h_sigma;
   csr     *A;
   csr     *At;
   csr     *P;
   c_int   *d_P_diag_ind;
   c_float *d_rho_vec;
-  c_float *h_sigma;
-  c_float *h_rho;
 
-  /* PCG iterates */
+  /* PCG iterates: raw vectors */
   c_float *d_x;             ///<  current iterate solution
   c_float *d_p;             ///<  current search direction
   c_float *d_Kp;            ///<  holds K*p
@@ -97,6 +97,14 @@ typedef struct cudapcg_solver_ {
   c_float *d_r;             ///<  residual r = K*x - b
   c_float *d_rhs;           ///<  right-hand side of Kx = b
   c_float *d_z;             ///<  holds z = A*x for computing A'*z = A'*(A*x);
+
+  /* PCG iterates: dense vector desciptors */
+  cusparseDnVecDescr_t vecx;
+  cusparseDnVecDescr_t vecp;
+  cusparseDnVecDescr_t vecKp;
+  cusparseDnVecDescr_t vecr;
+  cusparseDnVecDescr_t vecrhs;
+  cusparseDnVecDescr_t vecz;
 
   /* Pointer to page-locked host memory */
   c_float *h_r_norm;
@@ -126,6 +134,9 @@ typedef struct cudapcg_solver_ {
 } cudapcg_solver;
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 c_int init_linsys_solver_cudapcg(cudapcg_solver    **sp,
                                  const OSQPMatrix   *P,
@@ -135,6 +146,16 @@ c_int init_linsys_solver_cudapcg(cudapcg_solver    **sp,
                                  c_float            *scaled_prim_res,
                                  c_float            *scaled_dual_res,
                                  c_int               polishing);
+
+#ifdef __cplusplus
+}
+#endif
+
+/**
+ * Get the user-friendly name of the PCG solver.
+ * @return The user-friendly name
+ */
+const char* name_cudapcg();
 
 
 c_int solve_linsys_cudapcg(cudapcg_solver *s,
@@ -157,9 +178,5 @@ c_int update_linsys_solver_rho_vec_cudapcg(cudapcg_solver    *s,
                                            const OSQPVectorf *rho_vec,
                                            c_float            rho_sc);
 
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* ifndef OSQP_API_TYPES_H */
