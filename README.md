@@ -8,6 +8,8 @@
 ![PyPI - downloads](https://img.shields.io/pypi/dm/osqp.svg?label=Pypi%20downloads)
 ![Conda - downloads](https://img.shields.io/conda/dn/conda-forge/osqp.svg?label=Conda%20downloads)
 
+**I added some MPC examples in `tests`. First, you need to generate data using Python and build the tests. It is a little tricky.**
+
 [**Join our forum on Discourse**](https://osqp.discourse.group) for any questions related to the solver!
 
 **The documentation** is available at [**osqp.org**](https://osqp.org/)
