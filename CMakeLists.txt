@@ -79,7 +79,7 @@ if (DEFINED EMBEDDED)
 endif()
 message(STATUS "User interrupt is ${CTRLC}")
 
-# Use floats instead of integers
+# Use floats instead of doubles
 option (DFLOAT "Use float numbers instead of doubles" OFF)
 message(STATUS "Floats are ${DFLOAT}")
 
