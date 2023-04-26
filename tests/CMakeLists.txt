@@ -8,6 +8,8 @@ add_subdirectory(primal_infeasibility)
 add_subdirectory(solve_linsys)
 add_subdirectory(unconstrained)
 add_subdirectory(update_matrices)
+add_subdirectory(d_integrator)
+add_subdirectory(quadrotor)
 
 set(test_headers ${headers} PARENT_SCOPE)
 set(codegen_test_headers ${codegen_headers} PARENT_SCOPE)

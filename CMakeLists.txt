@@ -43,7 +43,7 @@ endif()
 # ----------------------------------------------
 
 # Are unittests generated?
-option (UNITTESTS "Enable unittests generation" OFF)
+option (UNITTESTS "Enable unittests generation" ON)
 
 # Is the code generated for embedded platforms?
 #   1 :   Yes. Matrix update not allowed.
@@ -80,11 +80,11 @@ endif()
 message(STATUS "User interrupt is ${CTRLC}")
 
 # Use floats instead of doubles
-option (DFLOAT "Use float numbers instead of doubles" OFF)
+option (DFLOAT "Use float numbers instead of doubles" ON)
 message(STATUS "Floats are ${DFLOAT}")
 
 # Use long integers for indexing
-option (DLONG "Use long integers (64bit) for indexing" ON)
+option (DLONG "Use long integers (64bit) for indexing" OFF)
 if (NOT (CMAKE_SIZEOF_VOID_P EQUAL 8))
 	message(STATUS "Disabling long integers (64bit) on 32bit machine")
 	set(DLONG OFF)

@@ -15,7 +15,8 @@
 #include "primal_infeasibility/test_primal_infeasibility.h"
 #include "unconstrained/test_unconstrained.h"
 #include "update_matrices/test_update_matrices.h"
-
+#include "d_integrator/test_integrator.h"
+#include "quadrotor/test_quadrotor.h"
 
 TEST_CASE( "test_lin_alg", "[multi-file:1]" ) {
     SECTION( "test_constr_sparse_mat" ) {
@@ -151,4 +152,16 @@ TEST_CASE( "test_update_matrices", "[multi-file:10]" ) {
         test_update_pardiso();
     }
 #endif
+}
+
+TEST_CASE( "test_d_integrator", "[multi-file:11]" ) {
+    SECTION( "test_d_integrator_solve" ) {
+        test_d_integrator_solve();
+    }
+}
+
+TEST_CASE( "test_quadrotor", "[multi-file:12]" ) {
+    SECTION( "test_quadrotor_solve" ) {
+        test_quadrotor_solve();
+    }
 }
